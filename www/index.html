@@ -36,6 +36,9 @@ var stage;
 var stageW;
 var stageH;
 
+
+
+
 var frame = new zim.Frame(scaling, width, height); 
 frame.on("ready", function() {	
 	zog("ready from ZIM Frame");
@@ -65,8 +68,10 @@ frame.on("ready", function() {
 	
 	var hotSpots = new app.makeHotSpots();	
 	
-	
-	
+	gridManager.dispose();
+	vLayoutManager.dispose();
+	guideManager.dispose();
+
 
 	// put resizing code in here (scaling="full" only)
 	frame.on("resize", function(e) {
@@ -76,6 +81,8 @@ frame.on("ready", function() {
 		vLayoutManager.resize();
 		gridManager.resize();
 		guideManager.resize();
+
+		zim.scaleTo(vP.main.backp, stage, 100, 100, "both");
 				
 		stage.update();
 	}); // end of resizing
