@@ -44,7 +44,6 @@ frame.on("ready", function() {
 	stageW = frame.stageW;
 	stageH = frame.stageH;
 	
-<<<<<<< HEAD
 	var contentPath = "images/";
 	var manifest = [
 		{src:"back.png", id:"back"},
@@ -57,39 +56,11 @@ frame.on("ready", function() {
 	preload.loadManifest(manifest);
 
 	function mobile(){
-=======
-	var vLayoutManager = new zim.LayoutManager();
-	var gridManager = new zim.GridManager();
-	var guideManager = new zim.GuideManager();
-	
-	
-	var vP = app.makeVerticalPages(vLayoutManager, gridManager, guideManager);
-	
-	//stage.addChild(hP.main);
-	//stage.addChild(hP.info);
-	//hP.info.x = 100;
-	
-	// left, right, up, down
-	var vPages = new zim.Pages(stage,[
-		{page:vP.main,  swipe:[vP.info, vP.info, vP.info, vP.info]},
-		{page:vP.info,  swipe:[vP.main, vP.main, vP.main, vP.main]}
-	], "slide", 500
-	);
-	stage.addChild(vPages);
-	
-	var hotSpots = new app.makeHotSpots();	
-	
-	gridManager.dispose();
-	vLayoutManager.dispose();
-	guideManager.dispose();
-
->>>>>>> origin/master
 
 		var vLayoutManager = new zim.LayoutManager();
 		var gridManager = new zim.GridManager();
 		var guideManager = new zim.GuideManager();
 		
-<<<<<<< HEAD
 		
 		var vP = app.makeVerticalPages(vLayoutManager, gridManager, guideManager, preload);
 		
@@ -120,20 +91,6 @@ frame.on("ready", function() {
 		 function resize(e) {
 			stageW = frame.stageW;
 			stageH = frame.stageH;
-=======
-		vLayoutManager.resize();
-		gridManager.resize();
-		guideManager.resize();
-
-		zim.scaleTo(vP.main.backp, stage, 100, 100, "both");
-				
-		stage.update();
-	}); // end of resizing
-	
-	// put orientation change code in here
-	frame.on("orientation", function(e) {	
-	
->>>>>>> origin/master
 			
 			vLayoutManager.resize();
 			gridManager.resize();

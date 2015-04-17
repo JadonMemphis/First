@@ -46,36 +46,69 @@ var app = function(app) {
 		p.info.name = "info";
 		p.info.setBounds(0,0,stageW,stageH);
 
-		var back = p.info.back = new createjs.Bitmap(preload.getResult("back"));
+		var back = new createjs.Bitmap(preload.getResult("back"));
 		//zog(back.getBounds());
 		back.x = 0;
 		back.y = 0;
 		p.info.addChild(back);
 		zim.scaleTo(back, stage, 100, 100, "both");
 
-		var counter =p.info.counter = new createjs.Text();
+		var counter = new createjs.Text("0", "16px Arial", "black");
 		counter.x = stageW / 2;
 		counter.y = 50;
-		counter.id = counter;
 		p.info.addChild(counter);
 			
 		var moonies = p.info.moonies = new createjs.Container();
 		p.info.addChild(moonies);
 
 		var moony;
-		
+		var destroyed = 0;
 		var total = 10;
+		var finished = false;
 		for(var i = 0; i<total; i++ ){
 			moony = new jadon.Moon(45);
+			moony.on("click", function(){
+				var blowUp = new jadon.Blow(moonies, this, preload.getResult("explode"));
+				destroyed++;
+		
+				if (destroyed >= total) {
+					gameOver("success");
+				}
+			});
 			moonies.addChild(moony);
 		} 
 
+		var t = 0;
+		createjs.Ticker.addEventListener("tick",updateGame);
+		createjs.Ticker.setFPS(30);
 
+		function updateGame(){
+			if (!finished) {
+				if (counter.text >= 60) {
+					gameOver("fail");
+				}
+				t++;
+				counter.text = Math.floor(t/30);
+			}
+			
+			
+			stage.update();
+		}
+		
 		// keep at end of main function
 		// for the fit scale mode you will probably need to code below
 		// to scale things as the screen size varies	
 			
-		
+		function gameOver(status){
+			finished = true;
+			//createjs.Ticker.removeEventListener("tick",updateGame);
+			if(status == "fail"){
+				console.log("you failed, you missed " + (total - destroyed + " moons"));
+			} else if( status == "success"){
+				console.log("Congrats you finished in " + counter.text + "s.");
+			}
+		}
+
 
 
 		return p;

@@ -1,0 +1,15 @@
+{
+"images": ["k.png"],
+"frames": [
+
+    [2, 2, 361, 383]
+],
+"animations": {
+    
+        "chew2":[0]
+},
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:a5c55ad862800c8958e5f4e1af55bece:e0902186ec5003929ed3acee4da65f80:1e160309f57510a6630cbc47bd944fcf$",
+        "Created with TexturePacker (http://www.texturepacker.com) for EaselJS"
+]
+}
