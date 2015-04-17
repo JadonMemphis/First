@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>ZIM Template</title> 
+<title>Mobile App</title> 
 
 <!-- for CreateJS and ZIMjs http://zimjs.com - free to modify - Dan Zen 2015 -->
 <!-- see http://zimjs.com/templates for more templates and meta tags -->
@@ -12,14 +12,11 @@
 <script src="http://code.createjs.com/createjs-2014.12.12.min.js"></script> 
 <!-- or can go to zimjs.com and createjs.com for individual modules -->
 
-<script src="library/jadon.1.js"></script>
+
 <script src="view.js"></script>
 <script src="controller.js"></script>
-
-<style>
-	body {margin:0px; padding:0px; background-color:#000;}
-	#myCanvas {position:absolute; background-color:#D1A170;}
-</style>
+<script src="library/jadon.1.js"></script>
+<link href="css/main.css" rel="stylesheet" type="text/css">
 
 <script>
 
@@ -36,6 +33,9 @@ var stage;
 var stageW;
 var stageH;
 
+
+
+
 var frame = new zim.Frame(scaling, width, height); 
 frame.on("ready", function() {	
 	zog("ready from ZIM Frame");
@@ -44,50 +44,79 @@ frame.on("ready", function() {
 	stageW = frame.stageW;
 	stageH = frame.stageH;
 	
-	var vLayoutManager = new zim.LayoutManager();
-	var gridManager = new zim.GridManager();
-	var guideManager = new zim.GuideManager();
-	
-	
-	var vP = app.makeVerticalPages(vLayoutManager, gridManager, guideManager);
-	
-	//stage.addChild(hP.main);
-	//stage.addChild(hP.info);
-	//hP.info.x = 100;
-	
-	// left, right, up, down
-	var vPages = new zim.Pages(stage,[
-		{page:vP.main,  swipe:[vP.info, vP.info, vP.info, vP.info]},
-		{page:vP.info,  swipe:[vP.main, vP.main, vP.main, vP.main]}
-	], "slide", 500
-	);
-	stage.addChild(vPages);
-	
-	var hotSpots = new app.makeHotSpots();	
-	
-	
-	
+	var contentPath = "images/";
+	var manifest = [
+		{src:"back.png", id:"back"},
+		{src:"eXpl.png", id:"explode"}
+	]; // array of objects
+	var preload = new createjs.LoadQueue(false, contentPath); // use true if on the same server	
+	//preload.installPlugin(createjs.Sound); // sound requires this plugin call (comment out if no sound)
+	//preload.on("progress", animateProgress); // this will update the progress (optional)
+	preload.on("complete", mobile);	 // call the main code when ready	
+	preload.loadManifest(manifest);
 
-	// put resizing code in here (scaling="full" only)
-	frame.on("resize", function(e) {
-		stageW = frame.stageW;
-		stageH = frame.stageH;
+	function mobile(){
+
+		var vLayoutManager = new zim.LayoutManager();
+		var gridManager = new zim.GridManager();
+		var guideManager = new zim.GuideManager();
 		
-		vLayoutManager.resize();
-		gridManager.resize();
-		guideManager.resize();
-				
-		stage.update();
-	}); // end of resizing
-	
-	// put orientation change code in here
-	frame.on("orientation", function(e) {	
-	
+		
+		var vP = app.makeVerticalPages(vLayoutManager, gridManager, guideManager, preload);
+		
+		//stage.addChild(hP.main);
+		//stage.addChild(hP.info);
+		//hP.info.x = 100;
+		
+		// left, right, up, down
+		var vPages = new zim.Pages(stage,[
+			{page:vP.main,  swipe:[null, null,null, null]},
+			{page:vP.info,  swipe:[vP.main, vP.main, vP.main, vP.main]}
+		], "slide", 500
+		);
+		stage.addChild(vPages);
+		
+		
+		
+		//gridManager.dispose();
+		//vLayoutManager.dispose();
+		//guideManager.dispose();
+
+		var hotspots = app.makeHotSpots(vP, vPages, preload);
+
+		// put resizing code in here (scaling="full" only)
+		frame.on("resize", resize);
+
+
+		 function resize(e) {
+			stageW = frame.stageW;
+			stageH = frame.stageH;
 			
-		stage.update();
-	}); // end of orientation
+			vLayoutManager.resize();
+			gridManager.resize();
+			guideManager.resize();
+
+			zim.scaleTo(vP.info.back, stage, 100, 100, "both");
+			vP.info.back.x = 0;
+			vP.info.back.y = 0;
+			//zim.scaleTo(vP.main.backp, stage, 100, 100, "both");
+					
+			stage.update();
+		}; // end of resizing
+		
+		resize();
+		
+		// put orientation change code in here
+		frame.on("orientation", function(e) {	
+		
+				
+			stage.update();
+		}); // end of orientation
+		
+		stage.update();	
+	}
+
 	
-	stage.update();	
 	
 }); // end of ready
 </script>
