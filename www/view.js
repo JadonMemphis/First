@@ -1,4 +1,5 @@
 
+
 // view
 zog("hi from view.js");
 
@@ -11,7 +12,33 @@ var app = function(app) {
 		
 		p.main = new createjs.Container();		
 		p.main.name = "main";	
+<<<<<<< HEAD
 		p.main.setBounds(0,0,stageW,stageH);		
+=======
+		p.main.setBounds(0,0,stageW,stageH);
+		
+		var backp = p.main.backp = new createjs.Bitmap("back.png");
+		p.main.addChild(backp);
+
+		
+		var logo = new zim.Rectangle(320, 100, "orange");	
+		logo.setBounds(100,100,100,100);
+		p.main.addChild(logo);
+		
+		var content = p.main.content = new createjs.Container();
+		content.setBounds(0,0,600,600);
+		//var thing = p.mainThing = new jadon.Blow(content, this);
+		var thing = new createjs.Bitmap("chewing.png")
+		thing.x = 100;
+		thing.y = 100;		
+		content.addChild(thing);
+
+	
+
+		p.main.addChild(content);
+
+
+>>>>>>> origin/master
 		
 		var introBack = new zim.Rectangle(stageW, stageH, "white");
 		p.main.addChild(introBack);
