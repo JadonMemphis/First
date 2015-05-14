@@ -16,7 +16,12 @@
 <script src="view.js"></script>
 <script src="controller.js"></script>
 <script src="library/jadon.1.js"></script>
-<link href="css/main.css" rel="stylesheet" type="text/css">
+
+<style>
+	body {margin:0px; padding:0px; background-color:#000;}
+	#myCanvas {position:absolute; background-color:#D1A170;}
+	#elapse{position:absolute; color:red;}
+</style>
 
 <script>
 
@@ -71,7 +76,7 @@ frame.on("ready", function() {
 		// left, right, up, down
 		var vPages = new zim.Pages(stage,[
 			{page:vP.main,  swipe:[null, null,null, null]},
-			{page:vP.info,  swipe:[vP.main, vP.main, vP.main, vP.main]}
+			{page:vP.info,  swipe:[null, null,null, null]}
 		], "slide", 500
 		);
 		stage.addChild(vPages);
@@ -85,10 +90,7 @@ frame.on("ready", function() {
 		var hotspots = app.makeHotSpots(vP, vPages, preload);
 
 		// put resizing code in here (scaling="full" only)
-		frame.on("resize", resize);
-
-
-		 function resize(e) {
+		frame.on("resize", function(e) {
 			stageW = frame.stageW;
 			stageH = frame.stageH;
 			
@@ -96,15 +98,13 @@ frame.on("ready", function() {
 			gridManager.resize();
 			guideManager.resize();
 
-			zim.scaleTo(vP.info.back, stage, 100, 100, "both");
-			vP.info.back.x = 0;
-			vP.info.back.y = 0;
+			zim.scaleTo(vP.back, stage, 100, 100, "both");
+			vP.back.x = 0;
+			vP.back.y = 0;
 			//zim.scaleTo(vP.main.backp, stage, 100, 100, "both");
 					
 			stage.update();
-		}; // end of resizing
-		
-		resize();
+		}); // end of resizing
 		
 		// put orientation change code in here
 		frame.on("orientation", function(e) {	
@@ -121,7 +121,7 @@ frame.on("ready", function() {
 }); // end of ready
 </script>
 </head>
-
+<div id="elapse"></div>
 <body>
 <!-- canvas with id="myCanvas" is made by zim Frame -->
 </body>
