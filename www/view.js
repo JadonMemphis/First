@@ -1,4 +1,3 @@
-
 // view
 zog("hi from view.js");
 
@@ -46,17 +45,18 @@ var app = function(app) {
 		p.info.name = "info";
 		p.info.setBounds(0,0,stageW,stageH);
 
-		var back = p.info.back = new createjs.Bitmap(preload.getResult("back"));
+		var back = new createjs.Bitmap(preload.getResult("back"));
 		//zog(back.getBounds());
 		back.x = 0;
 		back.y = 0;
 		p.info.addChild(back);
 		zim.scaleTo(back, stage, 100, 100, "both");
 
-		var counter =p.info.counter = new createjs.Text();
+		var counter =p.info.counter = new createjs.Text("0", "16px Arial", "black" );
+		counter.text = "Elapse Time";
+		counter.id = "count";
 		counter.x = stageW / 2;
 		counter.y = 50;
-		counter.id = counter;
 		p.info.addChild(counter);
 			
 		var moonies = p.info.moonies = new createjs.Container();
