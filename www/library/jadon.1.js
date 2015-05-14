@@ -177,8 +177,6 @@ var jadon = function(jadon){
 			this.y = Math.random() * window.innerHeight;
 
 			g.beginRadialGradientFill(["#be5b12", "#ffffff"], [0, 1], 0, 0, 10, 20, 50, 100).dc(a, b, r);
-			//g.f("red").dc(a, b, r);
-			this.cache(a-r, b-r, 2*r, 2*r);
 			createjs.Tween.get(that, {loop:true})
 				.to({x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight, alpha:0}, 10000);
 			
